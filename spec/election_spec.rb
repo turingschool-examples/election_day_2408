@@ -17,12 +17,13 @@ RSpec.describe Election do
             expect(@election.year).to eq("2024")
             expect(@election.races).to eq([])
         end
-    
+    end
     describe '#add_race' do
         it 'can add races to the election' do
            @election.add_race(@race)
            expect(@election.races).to eq([@race])
         end
+    end
     describe '#candidates' do
         it 'can provide candidate info' do
             @election.add_race(@race)
@@ -34,8 +35,8 @@ RSpec.describe Election do
         it 'can provide votes by candidate' do
             @election.add_race(@race)
             result_hash = {
-                @candidate1 => [@candidate1.votes],
-                @candidate2 => [@candidate2.votes]
+                @candidate1 => @candidate1.votes,
+                @candidate2 => @candidate2.votes
             }
             expect(@election.vote_counts). to eq(result_hash)
         end
