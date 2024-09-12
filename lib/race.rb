@@ -1,7 +1,4 @@
-require './lib/candidate'
-
 class Race
-  include Candidate
   attr_reader :office, :candidates
 
   def initialize(office)
@@ -10,6 +7,5 @@ class Race
   end
 
   def register_candidate!(candidates)
-    
   end
 end
