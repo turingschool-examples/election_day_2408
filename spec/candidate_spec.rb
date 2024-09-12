@@ -1,5 +1,4 @@
-require './lib/candidate'
-
+require './spec/spec_helper'
 RSpec.describe "Candidate" do
   before(:each) do
     @diana = Candidate.new({name: "Diana D", party: :democrat})
