@@ -11,7 +11,4 @@ class Candidate
     @votes += 1
   end
 
-  def self.all
-    ObjectSpace.each_object(self).to_a
-  end
 end
