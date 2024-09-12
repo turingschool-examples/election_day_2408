@@ -59,4 +59,37 @@ RSpec.describe Election do
     }
     expect(@election.vote_counts).to eq(vote_count)
   end
+
+  describe '#winners' do
+    before(:each) do
+      @race1.register_candidate!(@candidate1)
+      @race1.register_candidate!(@candidate5)
+      @race2.register_candidate!(@candidate2)
+      @race2.register_candidate!(@candidate3)
+      @race2.register_candidate!(@candidate4)
+      @election.add_race(@race1)
+      @election.add_race(@race2)
+    end
+
+    it 'returns an array of winners' do
+      5.times { @candidate1.vote_for! }
+      9.times { @candidate5.vote_for!}
+      @candidate3.vote_for!
+      3.times { @candidate2.vote_for! }
+      6.times { @candidate4.vote_for!}
+      @race1.close!
+      @race2.close!
+      expect(@election.winners).to eq([@candidate5, @candidate4])
+    end
+
+    it 'does not return winners in open or tied races' do
+      9.times { @candidate1.vote_for! }
+      9.times { @candidate5.vote_for! }
+      @candidate3.vote_for!
+      3.times { @candidate2.vote_for! }
+      6.times { @candidate4.vote_for!}
+      @race1.close!
+      expect(@election.winners).to eq([])
+    end
+  end
 end
