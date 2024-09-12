@@ -44,31 +44,36 @@ RSpec.describe Election do
 
     describe '#winners' do
         it 'can provide a list of winners for a closed race' do
+            @election.add_race(@race)
             @candidate1.vote_for!
             @candidate1.vote_for!
             @race.close!
-
+         
             @race2 = Race.new("Colorado Governor")
-            @candidate3 = @race.register_candidate!({name: "Matt T", party: :democrat})
-            @candidate4 = @race.register_candidate!({name: "John L", party: :republican})
+            @candidate3 = @race2.register_candidate!({name: "Matt T", party: :democrat})
+            @candidate4 = @race2.register_candidate!({name: "John L", party: :republican})
+            @election.add_race(@race2)
             expect(@election.winners).to eq([@candidate1])
 
             @candidate4.vote_for!
             @race2.close!
+
             expect(@election.winners).to eq([@candidate1,@candidate4])
         end
 
         it 'does not list a tie' do
+            @election.add_race(@race)
             @candidate1.vote_for!
             @candidate1.vote_for!
             @race.close!
 
             @race2 = Race.new("Colorado Governor")
-            @candidate3 = @race.register_candidate!({name: "Matt T", party: :democrat})
-            @candidate4 = @race.register_candidate!({name: "John L", party: :republican})
+            @candidate3 = @race2.register_candidate!({name: "Matt T", party: :democrat})
+            @candidate4 = @race2.register_candidate!({name: "John L", party: :republican})
             @candidate4.vote_for!
             @candidate3.vote_for!
             @race2.close!
+            @election.add_race(@race2)
             expect(@election.winners).to eq([@candidate1])
         end
 

@@ -5,6 +5,7 @@ class Election
     def initialize(year)
         @year = year
         @races = []
+
     end
 
     def add_race(race)
@@ -29,5 +30,16 @@ class Election
             end
         end
         vote_hash
+    end
+
+    def winners
+        election_winners = []
+        @races.each do |race|
+            if race.tie? ==false
+            election_winners << race.winner
+            #require "pry" ; binding.pry
+            end
+        end
+        election_winners
     end
 end
