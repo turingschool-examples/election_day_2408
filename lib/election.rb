@@ -24,4 +24,7 @@ class Election
     vote_count
   end
 
+  def winners
+    @races.map(&:winner).compact.reject { |winner| winner == false || winner.nil? }
+  end
 end
