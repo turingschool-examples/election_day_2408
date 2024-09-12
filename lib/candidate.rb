@@ -1,4 +1,4 @@
-module Candidate
+class Candidate
   attr_reader :name, :party, :votes
 
   def initialize(candidate_info)
@@ -10,17 +10,4 @@ module Candidate
   def vote_for!
     @votes += 1
   end
-
-  def self.create_multiple(candidates)
-    candidates.map do |candidate|
-      Candidate.new(candidate[candidate_info])
-    end
-  end
 end
-
-candidates = [
-  {name: "Diana D", party: :democrat}, 
-  {name: "Roberto R", party: :republican}
-]
-
-Candidate.create_multiple(candidates)
