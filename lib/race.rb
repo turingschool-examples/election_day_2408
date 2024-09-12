@@ -1,14 +1,14 @@
-require_relative 'candidate'
-
 class Race
   attr_reader :office, :candidates
 
   def initialize(office)
     @office = office
-    @candidates = Candidate.all
+    @candidates = []
   end
 
-  def register_candidate!(candidate)
-    # candidates << candidate
+  def register_candidate!(candidate_info)
+    candidate = Candidate.new(candidate_info)
+    @candidates << candidate
+    candidate
   end
 end
