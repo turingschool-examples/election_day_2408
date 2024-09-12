@@ -29,4 +29,57 @@ RSpec.describe Race do
             expect(@race.candidates).to eq([@candidate1, @candidate2])
         end
     end
+
+    describe '#open? and #close!' do
+        it 'can begin with open as true' do
+            expect(@race.open?).to eq(true)
+        end
+
+        it 'can close' do
+            @race.close!
+            expect(@race.open?).to eq(false)
+        end
+    end
+    describe '#winner and #tie?' do
+        it "can't give a winner until the race is closed" do
+            expect(@race.winner).to eq(false)
+
+        end
+        it 'can declare a winner' do
+            @candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
+            @candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
+            @candidate1.vote_for!
+            @candidate1.vote_for!
+            @race.close!
+            expect(@race.winner).to eq(@candidate1)
+        end
+
+        it 'can handle a tie' do
+            @candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
+            @candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
+            @candidate1.vote_for!
+            @candidate2.vote_for!
+            @race.close!
+            
+            expect(@race.winner).to eq(@candidate2)
+        end
+
+        it 'can confirm if there is a tie-false' do
+            @candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
+            @candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
+            @candidate1.vote_for!
+            @candidate1.vote_for!
+            @race.close!
+            expect(@race.tie?).to eq(false)
+        end
+
+        it 'can confirm if there is a tie-true' do
+            @candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
+            @candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
+            @candidate1.vote_for!
+            @candidate2.vote_for!
+            @race.close!
+            expect(@race.tie?).to eq(true)
+        end
+    end
 end
