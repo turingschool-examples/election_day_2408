@@ -15,7 +15,7 @@ RSpec.describe 'Election' do
     end
   end
 
-  describe '#add race' do
+  describe '#add race and candidates' do
     before(:each) do
       @race = Race.new("Texas Governor")
     end
@@ -26,6 +26,13 @@ RSpec.describe 'Election' do
       expect(@election.races.first).to be_an_instance_of(Race)
       expect(@election.races.first.office).to eq("Texas Governor")
     end
+
+    it 'creates an array of all candidate objects in the election' do
+      @candidate1 = @election.add_candidate_to_election({name: "Diana D", party: :democrat})
+      @candidate2 = @election.add_candidate_to_election({name: "Roberto R", party: :republican})
+
+      expect(@election.candidates).to eq([@candidate1, @candidate2])
+      end
   end
 
 end
